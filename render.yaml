@@ -1,0 +1,27 @@
+
+services:
+  - type: web
+    name: n8n-server
+    env: docker
+    plan: free
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: N8N_HOST
+        value: ${RENDER_EXTERNAL_HOSTNAME}
+      - key: N8N_PORT
+        value: 5678
+      - key: N8N_PROTOCOL
+        value: https
+      - key: N8N_PATH
+        value: /
+      - key: WEBHOOK_URL
+        value: https://${RENDER_EXTERNAL_HOSTNAME}
+      - key: GENERIC_TIMEZONE
+        value: Asia/Tehran
+      - key: DB_SQLITE_VACUUM_ON_STARTUP
+        value: true
+    disk:
+      name: n8n-data
+      mountPath: /home/node/.n8n
+      sizeGB: 1
